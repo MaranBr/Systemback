@@ -1,0 +1,3 @@
+systemback: desktop-command-not-in-package
+systemback: binary-without-manpage
+systemback: uses-dpkg-database-directly
