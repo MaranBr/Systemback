@@ -32,7 +32,7 @@ void scheduler::main()
             : ! sb::lock(sb::Schdlrlock) ? 5
             : daemon(0, 0) ? 6
             : [&]() -> uchar {
-                    sb::delay(100);
+                    sb::delay(200);
                     return sb::lock(sb::Schdlrlock) && sb::crtfile(*(pfile = new QStr(sb::isdir("/run") ? "/run/sbscheduler.pid" : "/var/run/sbscheduler.pid")), QStr::number(qApp->applicationPid())) ? 0 : 255;
                 }());
 

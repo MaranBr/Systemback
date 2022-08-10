@@ -642,7 +642,7 @@ void systemback::progress(uchar status)
 
             attron(COLOR_PAIR(2)),
             refresh();
-            if(a < 3) sb::delay(500);
+            if(a < 3) sb::delay(600);
         }
 
         break;
