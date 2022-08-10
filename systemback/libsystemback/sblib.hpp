@@ -100,7 +100,7 @@ public:
                 like(cQStr &txt, cQSL &lst, uchar mode = Norm),
                 execsrch(cQStr &fname, cQStr &ppath = nullptr),
                 scopy(uchar mthd, cQStr &usr, cQStr &srcdir),
-                mkptable(cQStr &dev, cQStr &type = "msdos"),
+                mkptable(cQStr &dev, cQStr &type = "gpt"),
                 crtfile(cQStr &path, cQStr &txt = nullptr),
                 like(int num, cSIL &lst, bool all = false),
                 access(cQStr &path, uchar mode = Read),
