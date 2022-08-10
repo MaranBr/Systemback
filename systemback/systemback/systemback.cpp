@@ -5929,7 +5929,7 @@ void systemback::on_changepartition_clicked()
             ui->partitionsettings->setRowCount(ui->partitionsettings->rowCount() + 1);
 
             for(short a(ui->partitionsettings->rowCount() - 1) ; a > ui->partitionsettings->currentRow() - 1 ; --a)
-                for(uchar b(0) ; b < 12 ; ++b)
+                for(uchar b(0) ; b < 11 ; ++b)
                 {
                     QTblWI *item(ui->partitionsettings->item(a, b));
                     ui->partitionsettings->setItem(a + 1, b, item ? item->clone() : nullptr);
