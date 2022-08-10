@@ -31,7 +31,10 @@ QMAKE_CXXFLAGS += -g \
                   -fvisibility=hidden \
                   -fvisibility-inlines-hidden \
                   -fno-asynchronous-unwind-tables \
-                  -Wno-implicit-fallthrough
+                  -Wno-implicit-fallthrough \
+                  -Wno-deprecated-declarations \
+                  -Wno-range-loop-construct \
+                  -Wno-format
 
 CONFIG(debug, debug|release) {
     QMAKE_CXXFLAGS_WARN_ON += -Wextra \
