@@ -36,7 +36,7 @@ By scanning the QR Code below.
 
 Works as expected on:
 
-- Linux Mint 19/20
+- Linux Mint 19/20/21
 
 It's possible that it works on other equivalent distributions based on Ubuntu as well.
 
@@ -100,7 +100,30 @@ $ cd Systemback
 $ sudo dpkg -i *.deb
 ```
 
+If there are dependency issues, install the missing dependencies with the following command:
+
+```
+$ sudo apt-get install -f
+```
+
+Then install the Systemback packages again:
+
+```
+$ sudo dpkg -i *.deb
+```
+
 ## Changelog
+
+- **1.8.701**
+  - Add support to create the bios_grub partition
+  - Change the default partitioning scheme from MBR to GPT
+  - Various fixes and improvements
+  - Sync all translation files
+
+- **1.8.700**
+  - Add support for Linux Mint 21
+  - Fix XDG_RUNTIME_DIR permission not set properly
+  - Update EFI boot files
 
 - **1.8.607**
   - Some minor fixes and improvements
@@ -143,21 +166,20 @@ $ sudo dpkg -i *.deb
   - Update EFI boot files
 
 - **1.8.402**
-  - Fix Live creation when the '/snap' directory is missing
+  - Fix Live creation when the /snap directory is missing
 
 - **1.8.400**
   - Add support to installed Snap packages
   - Remove support to old (version 1.5 and below) restore points
   - Fix possible segmentation fault when checking directory mount status
   - Fix translation files detection in DBGLEV=3 mode
-  - Fix source code compilation under Ubuntu 14.04
+  - Fix source code compilation under Ubuntu 14.04 LTS
   - Import new Romanian translations
 
 - **1.8.300**
   - Fix the possible conflict with the APT when updating the package index files
   - Import new EFI boot files from the Ubuntu 16.04 LTS
-  - Import new Czech, English (United Kingdom), Hungarian, Romanian and Spanish
-    translations
+  - Import new Czech, English (United Kingdom), Hungarian, Romanian and Spanish translations
 
 - **1.8.202**
   - Improve compatibility with apt 1.2
@@ -180,7 +202,7 @@ $ sudo dpkg -i *.deb
   - Fix possible segmentation fault when try to minimize the window with the button
 
 - **1.8.101**
-  - Fix partition information reading on Ubuntu 16.04
+  - Fix partition information reading on Ubuntu 16.04 LTS
 
 - **1.8.100**
   - Fix incorrect symlink following when creating a new incremental restore point (TeamViewer global.conf bug)
