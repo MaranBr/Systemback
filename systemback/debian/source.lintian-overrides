@@ -1,1 +1,2 @@
 systemback source: newer-standards-version *
+systemback source: debian-rules-should-not-use-custom-compression-settings

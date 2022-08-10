@@ -2,14 +2,14 @@ Source: systemback
 Section: admin
 Priority: optional
 Maintainer: MaranBr <maranbr@outlook.com>
-Build-Depends: debhelper (>= 10),
+Build-Depends: debhelper (>= 12),
                libblkid-dev,
                libmount-dev,
                libncursesw5-dev,
                libparted-dev,
                qtbase5-dev,
                qttools5-dev-tools
-Standards-Version: 4.5.0
+Standards-Version: 4.6.1
 
 Package: systemback
 Architecture: amd64 i386

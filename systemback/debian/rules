@@ -17,6 +17,7 @@ build-arch-stamp: configure-stamp
 	touch build-arch-stamp
 
 build-indep-stamp:
+	lupdate -noobsolete systemback.pro
 	lrelease -qt5 systemback.pro
 	touch build-indep-stamp
 
@@ -45,7 +46,7 @@ binary-arch: build-arch
 	dh_installchangelogs -a
 	dh_lintian -a
 	dh_compress -a
-	dh_builddeb -a
+	dh_builddeb -a -- -Zxz
 
 binary-indep: build-indep
 	dh_install -i
@@ -55,7 +56,7 @@ binary-indep: build-indep
 	dh_installdocs -i
 	dh_installchangelogs -i
 	dh_compress -i
-	dh_builddeb -i
+	dh_builddeb -i -- -Zxz
 
 binary: binary-arch binary-indep
 
