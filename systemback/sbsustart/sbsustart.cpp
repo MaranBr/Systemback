@@ -92,13 +92,12 @@ void sustart::main()
 
                             QStr sbruntimedir("/tmp/sb-runtime-root");
                             QDir dir(sbruntimedir);
+
                             if(dir.exists()) dir.removeRecursively();
 
-                            if (dir.mkpath("."))
-                            {
-                                if(! (qputenv("USER", "root") && qputenv("HOME", uhm) && qputenv("LOGNAME", "root") && qputenv("XDG_RUNTIME_DIR", sbruntimedir.toUtf8()) && qputenv("SHELL", "/bin/bash") && (xpath.isEmpty() || qputenv("XAUTHORITY", xpath.toUtf8())))) return false;
-                            }
-                            else
+                            if (dir.mkpath(".")) sb::exec("chmod 0700 " % sbruntimedir % " -R");
+
+                            if(! (qputenv("USER", "root") && qputenv("HOME", uhm) && qputenv("LOGNAME", "root") && qputenv("XDG_RUNTIME_DIR", sbruntimedir.toUtf8()) && qputenv("SHELL", "/bin/bash") && (xpath.isEmpty() || qputenv("XAUTHORITY", xpath.toUtf8()))))
                             {
                                 if(! (qputenv("USER", "root") && qputenv("HOME", uhm) && qputenv("LOGNAME", "root") && qputenv("SHELL", "/bin/bash") && (xpath.isEmpty() || qputenv("XAUTHORITY", xpath.toUtf8())))) return false;
                             }
