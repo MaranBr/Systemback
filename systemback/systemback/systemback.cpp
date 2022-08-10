@@ -506,7 +506,6 @@ systemback::systemback() : QMainWindow(nullptr, Qt::FramelessWindowHint), ui(new
                 ui->grubinstalltext->move(ui->grubinstalltext->x(), ui->copypanel->height() - ss(96)),
                 ui->grubinstallcopy->move(ui->grubinstallcopy->x(), ui->grubinstalltext->y()),
                 ui->grubinstallcopydisable->move(ui->grubinstallcopy->pos()),
-                ui->efiwarning->setGeometry(ui->efiwarning->x(), ui->grubinstalltext->y() - ss(4), ui->copypanel->width() - ui->efiwarning->x() - ss(8), ui->efiwarning->height()),
                 ui->copyback->move(ui->copyback->x(), ui->copypanel->height() - ss(48)),
                 ui->copynext->move(ui->partitionsettings->width(), ui->copyback->y()),
                 ui->copyresize->move(ui->copypanel->width() - ui->copyresize->width(), ui->copypanel->height() - ui->copyresize->height()),
@@ -828,15 +827,12 @@ void systemback::unitimer()
                 ui->repairmountpoint->addItem("/mnt/boot/efi"),
                 ui->grubinstallcopy->hide();
                 for(QCbB cmbx : QCbBL{ui->grubinstallcopy, ui->grubreinstallrestore, ui->grubreinstallrepair}) cmbx->addItems({"EFI", tr("Disabled")});
-                ui->grubinstallcopydisable->adjustSize(),
-                ui->efiwarning->move(ui->grubinstallcopydisable->x() + ui->grubinstallcopydisable->width() + ss(5), ui->grubinstallcopydisable->y() - ss(4)),
-                ui->efiwarning->resize(ui->copypanel->width() - ui->efiwarning->x() - sz[1], ui->efiwarning->height()),
-                ui->efiwarning->setForegroundRole(QPalette::Highlight);
+                ui->grubinstallcopydisable->adjustSize();
                 goto next_1;
             noefi:
 #endif
                 grub.name = "pc-bin", grub.isEFI = false;
-                for(QWdt wdgt : QWL{ui->grubinstallcopydisable, ui->efiwarning}) wdgt->hide();
+                ui->grubinstallcopydisable->hide();
 #ifdef __amd64__
             next_1:
 #endif
@@ -1784,14 +1780,14 @@ void systemback::pntupgrade()
             case 3 ... 9:
                 if(sb::pnumber < num + 1)
                 {
-                    if(ldt->text() != tr("not used")) ldt->setText(tr("not used"));
+                    if(ldt->text() != tr("Not used")) ldt->setText(tr("Not used"));
                 }
-                else if(ldt->text() != tr("empty"))
-                    ldt->setText(tr("empty"));
+                else if(ldt->text() != tr("Empty"))
+                    ldt->setText(tr("Empty"));
 
                 break;
             default:
-                if(ldt->text() != tr("empty")) ldt->setText(tr("empty"));
+                if(ldt->text() != tr("Empty")) ldt->setText(tr("Empty"));
             }
         }
 
@@ -2027,23 +2023,28 @@ void systemback::systemcopy()
             sb::fssync();
             if(intrrpt) return err();
 
-            if(fstype.length() > 2)
+            if(fstype.length() > 2 && mpoint != "bios_grub")
             {
-                QStr lbl("SB@" % (mpoint.startsWith('/') ? sb::right(mpoint, -1) : mpoint));
+                QStr lbl("SB@" % (mpoint.startsWith("/boot") && mpoint.length() > 5 ? sb::right(mpoint, -6) : mpoint.startsWith("/usr") && mpoint.length() > 4 ? sb::right(mpoint, -5) : mpoint.startsWith("/") && mpoint.length() > 2 ? sb::right(mpoint, -1) : mpoint.startsWith("/") && mpoint.length() < 2 ? "root" : "swap").toUpper());
 
                 uchar rv(fstype == "swap" ? sb::exec("mkswap -L " % lbl % ' ' % part)
                        : fstype == "jfs" ? sb::exec("mkfs.jfs -qL " % lbl % ' ' % part)
                        : fstype == "reiserfs" ? sb::exec("mkfs.reiserfs -ql " % lbl % ' ' % part)
                        : fstype == "xfs" ? sb::exec("mkfs.xfs -fL " % lbl % ' ' % part)
-                       : fstype == "vfat" ? sb::setpflag(part, "boot") ? sb::exec("mkfs.vfat -F 32 -n " % lbl.toUpper() % ' ' % part) : 255
+                       : fstype == "vfat" ? sb::setpflag(part, "boot esp") ? sb::exec("mkfs.vfat -F 32 -n " % lbl % ' ' % part) : 255
                        : fstype == "btrfs" ? (ckd.contains(part) ? 0 : sb::exec("mkfs.btrfs -fL " % lbl % ' ' % part)) ? sb::exec("mkfs.btrfs -L " % lbl % ' ' % part) : 0
                        : sb::exec("mkfs." % fstype % " -FL " % lbl % ' ' % part));
 
                 if(intrrpt) return err();
                 if(rv) return err(ui->userdatafilescopy->isVisibleTo(ui->copypanel) ? 317 : 331, part);
             }
+            else if(mpoint == "bios_grub")
+            {
+                if(intrrpt) return err();
+                sb::setpflag(part, "bios_grub");
+            }
 
-            if(mpoint != "SWAP")
+            if(mpoint != "swap" && mpoint != "bios_grub")
             {
                 if(! sb::isdir("/.sbsystemcopy" % mpoint))
                 {
@@ -2480,7 +2481,7 @@ void systemback::systemcopy()
                 {
                     QStr uuid(sb::ruuid(ui->partitionsettings->item(a, 0)->text())), nfs(ui->partitionsettings->item(a, 5)->text());
 
-                    fstabtxt.append("# " % (nmpt == "SWAP" ? QStr("SWAP\nUUID=" % uuid % "   none   swap   sw   0   0")
+                    fstabtxt.append("# " % (nmpt == "swap" ? QStr("swap\nUUID=" % uuid % "   none   swap   sw   0   0")
                         : nmpt % "\nUUID=" % uuid % "   " % nmpt % "   " % nfs % "   noatime"
                             % (nmpt == "/" ? QStr(nfs == "reiserfs" ? ",notail" : nfs == "btrfs" ? ",subvol=@" : ",errors=remount-ro") % "   0   1"
                                 : nmpt == "/boot/efi" ? QStr(",umask=0077   0   1")
@@ -2532,8 +2533,12 @@ void systemback::systemcopy()
     if(ui->grubinstallcopy->isVisibleTo(ui->copypanel))
     {
         if(intrrpt) return err();
-        { QSL mlst{"dev", "dev/pts", "proc", "sys"};
-        for(cQStr &bpath : (sb::mcheck("/run") ? mlst << "/run" : mlst)) sb::mount('/' % bpath, "/.sbsystemcopy/" % bpath); }
+
+        {
+            QSL mlst{"dev", "dev/pts", "proc", "sys"};
+            for(cQStr &bpath : (sb::mcheck("/run") ? mlst << "/run" : mlst))
+                sb::mount('/' % bpath, "/.sbsystemcopy/" % bpath);
+        }
 
         if(ui->grubinstallcopy->currentText() == tr("Disabled"))
             sb::exec("chroot /.sbsystemcopy update-grub");
@@ -2616,7 +2621,7 @@ void systemback::livewrite()
     }
 
     if(! sb::mkptable(ldev) || intrrpt) return err(338);
-    sb::delay(100);
+    sb::delay(300);
     QStr lrdir;
 
     {
@@ -2625,13 +2630,13 @@ void systemback::livewrite()
         if(isize < 4294967295)
         {
             if(! sb::mkpart(ldev) || intrrpt) return err(338);
-            sb::delay(100),
+            sb::delay(300),
             lrdir = "sblive";
         }
         else
         {
             if(! (sb::mkpart(ldev, 1048576, 104857600) && sb::mkpart(ldev)) || intrrpt) return err(338);
-            sb::delay(100);
+            sb::delay(300);
             if(sb::exec("mkfs.ext2 -FL SBROOT " % ldev % ((ismmc || isnvme)? "p" : nullptr) % '2') || intrrpt) return err(338);
             lrdir = "sbroot";
         }
@@ -2643,7 +2648,7 @@ void systemback::livewrite()
             || intrrpt || ! (sb::crtdir("/.sblivesystemwrite") && sb::crtdir("/.sblivesystemwrite/sblive"))
             || intrrpt) return err();
 
-        sb::delay(100);
+        sb::delay(300);
         if(! sb::mount(ldev % ((ismmc || isnvme) ? "p" : nullptr) % '1', "/.sblivesystemwrite/sblive") || intrrpt) return err(337);
 
         if(lrdir == "sbroot")
@@ -3573,7 +3578,7 @@ void systemback::on_adminpassword_textChanged(const QStr &arg1)
     }
     else if(! hash.isEmpty() && QStr(crypt(bstr(arg1), bstr(hash))) == hash)
     {
-        sb::delay(300);
+        sb::delay(400);
 
         if(ccnt == icnt)
         {
@@ -3707,10 +3712,10 @@ void systemback::pnmchange(uchar num)
             }
             else if(cnum <= num)
             {
-                if(ldt->text() == tr("not used")) ldt->setText(tr("empty"));
+                if(ldt->text() == tr("Not used")) ldt->setText(tr("Empty"));
             }
-            else if(ldt->text() == tr("empty"))
-                ldt->setText(tr("not used"));
+            else if(ldt->text() == tr("Empty"))
+                ldt->setText(tr("Not used"));
         }
 }
 
@@ -4087,18 +4092,18 @@ void systemback::on_partitionrefresh_clicked()
     if(! ui->copycover->isVisibleTo(ui->copypanel)) ui->copycover->show();
     if(ui->copynext->isEnabled()) ui->copynext->setDisabled(true);
     if(ui->mountpoint->count()) ui->mountpoint->clear();
-    ui->mountpoint->addItems({nullptr, "/", "/home", "/boot"});
+    ui->mountpoint->addItems({nullptr, "/", "/boot", "/home", "/tmp", "/usr", "/var", "/srv", "/opt", "/usr/local"});
 
     if(grub.isEFI)
     {
         ui->mountpoint->addItem("/boot/efi");
-        if(! ui->efiwarning->isVisibleTo(ui->copypanel)) ui->efiwarning->show();
-
         if(ui->grubinstallcopy->isVisibleTo(ui->copypanel)) ui->grubinstallcopy->hide(),
                                                             ui->grubinstallcopydisable->show();
     }
+    else
+        ui->mountpoint->addItem("bios_grub");
 
-    ui->mountpoint->addItems({"/tmp", "/usr", "/var", "/srv", "/opt", "/usr/local", "SWAP"});
+    ui->mountpoint->addItem("swap");
 
     if(ui->mountpoint->isEnabled())
     {
@@ -4237,9 +4242,11 @@ void systemback::on_partitionrefresh_clicked()
                                         return sb::mid(mnt, spc + 1, sb::instr(mnt, " ", spc + 1) - spc - 1).replace("\\040", " ");
                                     }();
                             else if(QStr('\n' % mnts[1]).contains('\n' % path % ' '))
-                                return "SWAP";
+                                return "swap";
 
-                            ui->repairpartition->addItem(path);
+                            if(! dts.at(4).isEmpty() && dts.at(4) != "?")
+                                ui->repairpartition->addItem(path);
+
                             return nullptr;
                         }()));
 
@@ -4306,7 +4313,7 @@ void systemback::on_unmountdelete_clicked()
 
     if(ui->unmountdelete->text() == tr("Unmount"))
     {
-        if(ui->partitionsettings->item(ui->partitionsettings->currentRow(), 3)->text() != "SWAP")
+        if(ui->partitionsettings->item(ui->partitionsettings->currentRow(), 3)->text() != "swap")
         {
             QStr mnts(sb::fload("/proc/self/mounts", true));
             QTS in(&mnts, QIODevice::ReadOnly);
@@ -4323,7 +4330,7 @@ void systemback::on_unmountdelete_clicked()
             {
                 QStr mpt(ui->partitionsettings->item(a, 3)->text());
 
-                if(! (mpt.isEmpty() || sb::like(mpt, {"_SWAP_", '_' % tr("Multiple mount points") % '_'}) || mnts.contains(' ' % mpt.replace(" ", "\\040") % ' '))) ui->partitionsettings->item(a, 3)->setText(nullptr),
+                if(! (mpt.isEmpty() || sb::like(mpt, {"_swap_", '_' % tr("Multiple mount points") % '_'}) || mnts.contains(' ' % mpt.replace(" ", "\\040") % ' '))) ui->partitionsettings->item(a, 3)->setText(nullptr),
                                                                                                                                                                     ui->partitionsettings->item(a, 3)->setToolTip(nullptr);
             }
 
@@ -4369,7 +4376,7 @@ void systemback::on_unmount_clicked()
 
                 if(! mpt.isEmpty())
                 {
-                    if(mpt == "SWAP")
+                    if(mpt == "swap")
                         swapoff(bstr(ui->partitionsettings->item(a, 0)->text()));
                     else
                     {
@@ -4401,7 +4408,7 @@ void systemback::on_unmount_clicked()
 
             if(! mpt.isEmpty())
             {
-                if((mpt == "SWAP" && ! QStr('\n' % mnts[1]).contains('\n' % ui->partitionsettings->item(a, 0)->text() % ' ')) || ! (mpt == "SWAP" || mnts[0].contains(' ' % mpt.replace(" ", "\\040") % ' ')))
+                if((mpt == "swap" && ! QStr('\n' % mnts[1]).contains('\n' % ui->partitionsettings->item(a, 0)->text() % ' ')) || ! (mpt == "swap" || mnts[0].contains(' ' % mpt.replace(" ", "\\040") % ' ')))
                     ui->partitionsettings->item(a, 3)->setText(nullptr),
                     ui->partitionsettings->item(a, 3)->setToolTip(nullptr);
                 else if(umntd)
@@ -5837,19 +5844,19 @@ void systemback::on_partitionsettings_currentItemChanged(QTblWI *crrnt, QTblWI *
                             ui->mountpoint->setCurrentText(nullptr);
                     }
                 }
-                else if(mpt == "SWAP")
+                else if(mpt == "swap")
                 {
                     for(QWdt wdgt : QWL{ui->mountpoint, ui->unmountdelete})
                         if(! wdgt->isEnabled()) wdgt->setEnabled(true);
 
-                    if(ui->mountpoint->currentText() != "SWAP")
+                    if(ui->mountpoint->currentText() != "swap")
                     {
                         if(ui->mountpoint->currentIndex())
                             ui->mountpoint->setCurrentIndex(0);
                         else if(! ui->mountpoint->currentText().isEmpty())
                             ui->mountpoint->setCurrentText(nullptr);
                     }
-                    else if(ui->partitionsettings->item(crrnt->row(), 4)->text() == "SWAP")
+                    else if(ui->partitionsettings->item(crrnt->row(), 4)->text() == "swap")
                     {
                         if(ui->changepartition->isEnabled()) ui->changepartition->setDisabled(true);
                     }
@@ -5913,6 +5920,7 @@ void systemback::on_changepartition_clicked()
 {
     busy();
     QStr ompt(ui->partitionsettings->item(ui->partitionsettings->currentRow(), 4)->text()), mpt(ui->partitionsettings->item(ui->partitionsettings->currentRow(), 3)->text());
+    static QSL partitionmounted;
 
     if(! ompt.isEmpty())
     {
@@ -5921,7 +5929,7 @@ void systemback::on_changepartition_clicked()
             ui->partitionsettings->setRowCount(ui->partitionsettings->rowCount() + 1);
 
             for(short a(ui->partitionsettings->rowCount() - 1) ; a > ui->partitionsettings->currentRow() - 1 ; --a)
-                for(uchar b(0) ; b < 11 ; ++b)
+                for(uchar b(0) ; b < 12 ; ++b)
                 {
                     QTblWI *item(ui->partitionsettings->item(a, b));
                     ui->partitionsettings->setItem(a + 1, b, item ? item->clone() : nullptr);
@@ -5932,12 +5940,13 @@ void systemback::on_changepartition_clicked()
             ui->mountpoint->addItem("/");
         else if(grub.isEFI && ompt == "/boot/efi")
         {
+            ui->mountpoint->addItem("/boot/efi");
             if(ui->grubinstallcopy->isVisible()) ui->grubinstallcopy->hide(),
                                                  ui->grubinstallcopydisable->show();
-
-            ui->mountpoint->addItem("/boot/efi"),
-            ui->efiwarning->show();
         }
+        else if(ompt == "bios_grub")
+            ui->mountpoint->addItem("bios_grub");
+            
         else if(sb::like(ompt, {"_/home_", "_/boot_", "_/tmp_", "_/usr_", "_/usr/local_", "_/var_", "_/srv_", "_/opt_"}))
             ui->mountpoint->addItem(ompt);
     }
@@ -5960,17 +5969,12 @@ void systemback::on_changepartition_clicked()
                 else if(ui->grubinstallcopy->isVisible())
                     ui->grubinstallcopy->hide(),
                     ui->grubinstallcopydisable->show();
-
-                ui->efiwarning->hide();
             }
         }
-        else if(ui->mountpoint->currentText() != "SWAP")
-        {
-            if(ui->partitionsettings->item(ui->partitionsettings->currentRow(), 5)->text() != ui->filesystem->currentText()) ui->partitionsettings->item(ui->partitionsettings->currentRow(), 5)->setText(ui->filesystem->currentText());
-            if(ui->mountpoint->currentText() == "/") ui->copynext->setEnabled(true);
-        }
-        else if(ui->partitionsettings->item(ui->partitionsettings->currentRow(), 5)->text() != "swap")
-            ui->partitionsettings->item(ui->partitionsettings->currentRow(), 5)->setText("swap");
+        else if(ui->mountpoint->currentText() != "bios_grub" && ui->partitionsettings->item(ui->partitionsettings->currentRow(), 5)->text() != ui->filesystem->currentText())
+            ui->partitionsettings->item(ui->partitionsettings->currentRow(), 5)->setText(ui->filesystem->currentText());
+        else if(ui->mountpoint->currentText() == "bios_grub" && (! ui->partitionsettings->item(ui->partitionsettings->currentRow(), 5)->text().isEmpty()))
+            ui->partitionsettings->item(ui->partitionsettings->currentRow(), 5)->setText(nullptr);
 
         if(ui->format->isChecked())
         {
@@ -5984,8 +5988,7 @@ void systemback::on_changepartition_clicked()
     }
     else if(grub.isEFI && mpt == "/boot/efi")
     {
-        ui->partitionsettings->item(ui->partitionsettings->currentRow(), 4)->setText("/boot/efi"),
-        ui->efiwarning->hide();
+        ui->partitionsettings->item(ui->partitionsettings->currentRow(), 4)->setText("/boot/efi");
 
         if(ppipe ? sb::execsrch("update-grub2", sb::sdir[1] % '/' % cpoint % '_' % pname) && sb::isfile(sb::sdir[1] % '/' % cpoint % '_' % pname % "/var/lib/dpkg/info/grub-" % grub.name % ".list") : sb::execsrch("update-grub2") && sb::isfile("/var/lib/dpkg/info/grub-" % grub.name % ".list"))
         {
@@ -6001,9 +6004,21 @@ void systemback::on_changepartition_clicked()
         ui->userdatafilescopy->setDisabled(true),
         nohmcpy[1] = true;
     else
-        ui->partitionsettings->item(ui->partitionsettings->currentRow(), 4)->setText("SWAP");
+        ui->partitionsettings->item(ui->partitionsettings->currentRow(), 4)->setText("swap");
 
-    if(ui->mountpoint->currentIndex() && ui->mountpoint->currentText() != "SWAP") ui->mountpoint->removeItem(ui->mountpoint->currentIndex());
+    if(ui->mountpoint->currentIndex() && ui->mountpoint->currentText() != "swap") ui->mountpoint->removeItem(ui->mountpoint->currentIndex());
+
+    bool ok = true;
+    for(cQStr &ctext : {"/", "/boot/efi", "bios_grub"})
+    {
+        if(ui->mountpoint->findText(ctext, Qt::MatchFixedString) != -1)
+            ok = false;
+    }
+
+    if(ok && ! ui->copynext->isEnabled())
+        ui->copynext->setEnabled(true);
+    else if(ui->copynext->isEnabled())
+        ui->copynext->setDisabled(true);
 
     if(ui->mountpoint->currentIndex())
         ui->mountpoint->setCurrentIndex(0);
@@ -6027,7 +6042,7 @@ void systemback::on_format_clicked(bool chckd)
         {
             if(ui->partitionsettings->item(ui->partitionsettings->currentRow(), 7)->text() != "vfat") ui->format->setChecked(true);
         }
-        else if(ui->mountpoint->currentText() == "SWAP")
+        else if(ui->mountpoint->currentText() == "swap")
         {
             if(ui->partitionsettings->item(ui->partitionsettings->currentRow(), 7)->text() != "swap") ui->format->setChecked(true);
         }
@@ -6042,37 +6057,46 @@ void systemback::on_mountpoint_currentTextChanged(const QStr &arg1)
 
     if(ui->mountpoint->isEnabled())
     {
-        if(! arg1.isEmpty() && (! sb::like(arg1, {"_/*", "_S_", "_SW_", "_SWA_", "_SWAP_"}) || sb::like(arg1, {"* *", "*//*"})))
+        if(! arg1.isEmpty() && (! sb::like(arg1, {"_/*", "_s_", "_sw_", "_swa_", "_swap_", "_bios_grub_"}) || sb::like(arg1, {"* *", "*//*"})))
             ui->mountpoint->setCurrentText(sb::left(arg1, -1));
         else
         {
             QStr mpt(ui->partitionsettings->item(ui->partitionsettings->currentRow(), 3)->text()), ompt(ui->partitionsettings->item(ui->partitionsettings->currentRow(), 4)->text());
 
-            if(sb::like(mpt, {"_/boot/efi_", "_/home_", "_SWAP_"}))
+            if(sb::like(mpt, {"_/boot/efi_", "_/home_", "_swap_"}))
             {
-                if(ui->format->isEnabled())
-                {
-                    ui->format->setDisabled(true);
-                    if(ui->filesystem->isEnabled()) ui->filesystem->setDisabled(true);
-                }
+                if(ui->format->isEnabled()) ui->format->setDisabled(true);
+                if(ui->filesystem->isEnabled()) ui->filesystem->setDisabled(true);
             }
             else if(ompt.isEmpty() || ui->partitionsettings->item(ui->partitionsettings->currentRow(), 5)->text() != "btrfs")
             {
-                if(sb::like(arg1, {"_/boot/efi_", "_SWAP_"}))
+                if(sb::like(arg1, {"_/boot/efi_", "_swap_", "_bios_grub_"}))
                 {
                     if(ui->filesystem->isEnabled()) ui->filesystem->setDisabled(true);
                 }
                 else if(! ui->filesystem->isEnabled())
                     ui->filesystem->setEnabled(true);
 
-                if(! ui->format->isEnabled()) ui->format->setEnabled(true);
-                if(! ui->format->isChecked()) ui->format->setChecked(true);
+                if(arg1 == "bios_grub")
+                {
+                    if(ui->format->isChecked()) ui->format->setChecked(false);
+                    if(ui->format->isEnabled()) ui->format->setDisabled(true);
+                }
+                else if(! ui->format->isEnabled())
+                {
+                    ui->format->setEnabled(true);
+                    ui->format->setChecked(true);
+                }
             }
-            else if(sb::like(arg1, {"_/boot/efi_", "_SWAP_"}))
-                return ui->changepartition->isEnabled() ? ui->changepartition->setDisabled(true) : void();
+            else if(sb::like(arg1, {"_/boot/efi_", "_swap_"}))
+            {
+                if(ui->changepartition->isEnabled()) ui->changepartition->setDisabled(true);
+            }
 
-            if(arg1.isEmpty() || (arg1.length() > 1 && arg1.endsWith('/')) || sb::like(arg1, {'_' % ompt % '_', "_/bin_", "_/sbin_", "_/etc_", "_/lib_", "_/lib32_", "_/lib64_", "_/libx32_", "_/media_"}) || (ui->usersettingscopy->isVisible() && arg1.startsWith("/home/")) || (arg1 != "/boot/efi" && ui->partitionsettings->item(ui->partitionsettings->currentRow(), 10)->text().toULongLong() < 268435456) || (grub.isEFI && mpt == "/boot/efi" && arg1 != "/boot/efi") || (nohmcpy[0] && mpt == "/home" && arg1 != "/home") || (mpt == "SWAP" && arg1 != "SWAP")
-                || (arg1 != "SWAP" && [&] {
+            if(arg1 == "bios_grub" && (! ui->changepartition->isEnabled()))
+                ui->changepartition->setEnabled(true);
+            else if(arg1.isEmpty() || (arg1.length() > 1 && arg1.endsWith('/')) || sb::like(arg1, {'_' % ompt % '_', "_/bin_", "_/sbin_", "_/etc_", "_/lib_", "_/lib32_", "_/lib64_", "_/libx32_", "_/media_"}) || (ui->usersettingscopy->isVisible() && arg1.startsWith("/home/")) || (arg1 != "/boot/efi" && ui->partitionsettings->item(ui->partitionsettings->currentRow(), 10)->text().toULongLong() < 268435456) || (grub.isEFI && mpt == "/boot/efi" && arg1 != "/boot/efi") || (nohmcpy[0] && mpt == "/home" && arg1 != "/home") || (mpt == "swap" && arg1 != "swap")
+                || (arg1 != "swap" && [&] {
                         for(ushort a(0) ; a < ui->partitionsettings->rowCount() ; ++a)
                             if(ui->partitionsettings->item(a, 4)->text() == arg1) return true;
 
@@ -6081,10 +6105,10 @@ void systemback::on_mountpoint_currentTextChanged(const QStr &arg1)
             {
                 if(ui->changepartition->isEnabled()) ui->changepartition->setDisabled(true);
             }
-            else if(! sb::like(arg1, {"_/_", "_/home_", "_/boot_", "_/boot/efi_", "_/tmp_", "_/usr_", "_/usr/local_", "_/var_", "_/srv_", "_/opt_", "_SWAP_"}))
+            else if(! sb::like(arg1, {"_/_", "_/home_", "_/boot_", "_/boot/efi_", "_/tmp_", "_/usr_", "_/usr/local_", "_/var_", "_/srv_", "_/opt_", "_swap_", "_bios_grub_"}))
             {
                 if(ui->changepartition->isEnabled()) ui->changepartition->setDisabled(true);
-                sb::delay(300);
+                sb::delay(400);
 
                 if(ccnt == icnt && [&] {
                         switch(sb::stype(ppipe ? sb::sdir[1] % '/' % cpoint % '_' % pname % arg1 : arg1)) {
@@ -6154,7 +6178,7 @@ void systemback::on_repairmountpoint_currentTextChanged(const QStr &arg1)
     else if(! sb::like(arg1, {"_/mnt_", "_/mnt/home_", "_/mnt/boot_", "_/mnt/boot/efi_", "_/mnt/usr_", "_/mnt/usr/local_", "_/mnt/var_", "_/mnt/opt_"}))
     {
         if(ui->repairmount->isEnabled()) ui->repairmount->setDisabled(true);
-        sb::delay(300);
+        sb::delay(400);
         if(ccnt == icnt && QTemporaryDir("/tmp/" % QStr(arg1).replace('/', '_') % '_' % sb::rndstr()).isValid()) ui->repairmount->setEnabled(true);
     }
     else if(! ui->repairmount->isEnabled())
@@ -6194,7 +6218,7 @@ void systemback::on_repairmount_clicked()
         ui->repaircover->hide(), busy(false);
 
         if(ui->repairmount->text().isEmpty()) ui->repairmount->setEnabled(true),
-                                              sb::delay(500),
+                                              sb::delay(600),
                                               ui->repairmount->setIcon(QIcon()),
                                               ui->repairmount->setText(tr("Mount"));
     }
@@ -6238,7 +6262,7 @@ void systemback::on_livename_textChanged(const QStr &arg1)
 
             if(! arg1.isEmpty())
             {
-                sb::delay(300);
+                sb::delay(400);
 
                 if(ccnt == icnt)
                 {
@@ -7421,7 +7445,7 @@ void systemback::on_livenew_clicked()
         if(xmntry) grxorg = "menuentry \"" % tr("Boot Live without xorg.conf file") % "\" {\n  set gfxpayload=keep\n  linux /" % lvtype % "/vmlinuz " % rpart % "boot=" % lvtype % " noxconf quiet splash" % prmtrs % "\n  initrd /" % lvtype % "/initrd.gz\n}\n\n", srxorg = "label noxconf\n  menu label " % tr("Boot Live without xorg.conf file") % "\n  kernel /" % lvtype % "/vmlinuz\n  append " % rpart % "boot=" % lvtype % " initrd=/" % lvtype % "/initrd.gz noxconf quiet splash" % prmtrs % "\n\n";
 #ifdef __amd64__
         if(sb::isfile("/usr/share/systemback/efi-amd64.bootfiles") && (sb::exec("tar -xJf /usr/share/systemback/efi-amd64.bootfiles -C \"" % sb::sdir[2] % "\"/.sblivesystemcreate --no-same-owner --no-same-permissions") || ! (sb::copy("/usr/share/systemback/splash.png", sb::sdir[2] % "/.sblivesystemcreate/boot/grub/splash.png") &&
-            sb::crtfile(sb::sdir[2] % "/.sblivesystemcreate/boot/grub/grub.cfg", "if loadfont /boot/grub/font.pf2\nthen\n  set gfxmode=auto\n  insmod efi_gop\n  insmod efi_uga\n  insmod gfxterm\n  terminal_output gfxterm\nfi\n\nset theme=/boot/grub/theme.cfg\n\nmenuentry \"" % tr("Boot Live system") % "\" {\n  set gfxpayload=keep\n  linux /" % lvtype % "/vmlinuz " % rpart % "boot=" % lvtype % " quiet splash" % prmtrs % "\n  initrd /" % lvtype % "/initrd.gz\n}\n\nmenuentry \"" % tr("Boot system installer") % "\" {\n  set gfxpayload=keep\n  linux /" % lvtype % "/vmlinuz " % rpart % "boot=" % lvtype % " finstall quiet splash" % prmtrs % "\n  initrd /" % lvtype % "/initrd.gz\n}\n\nmenuentry \"" % tr("Boot Live in safe graphics mode") % "\" {\n  set gfxpayload=keep\n  linux /" % lvtype % "/vmlinuz " % rpart % "boot=" % lvtype % " xforcevesa nomodeset quiet splash" % prmtrs % "\n  initrd /" % lvtype % "/initrd.gz\n}\n\n" % grxorg % "menuentry \"" % tr("Boot Live in debug mode") % "\" {\n  set gfxpayload=keep\n  linux /" % lvtype % "/vmlinuz " % rpart % "boot=" % lvtype % prmtrs % "\n  initrd /" % lvtype % "/initrd.gz\n}\n") &&
+            sb::crtfile(sb::sdir[2] % "/.sblivesystemcreate/boot/grub/grub.cfg", "if loadfont /boot/grub/fonts/unicode.pf2\nthen\n  set gfxmode=auto\n  insmod efi_gop\n  insmod efi_uga\n  insmod gfxterm\n  terminal_output gfxterm\nfi\n\nset theme=/boot/grub/theme.cfg\n\nmenuentry \"" % tr("Boot Live system") % "\" {\n  set gfxpayload=keep\n  linux /" % lvtype % "/vmlinuz " % rpart % "boot=" % lvtype % " quiet splash" % prmtrs % "\n  initrd /" % lvtype % "/initrd.gz\n}\n\nmenuentry \"" % tr("Boot system installer") % "\" {\n  set gfxpayload=keep\n  linux /" % lvtype % "/vmlinuz " % rpart % "boot=" % lvtype % " finstall quiet splash" % prmtrs % "\n  initrd /" % lvtype % "/initrd.gz\n}\n\nmenuentry \"" % tr("Boot Live in safe graphics mode") % "\" {\n  set gfxpayload=keep\n  linux /" % lvtype % "/vmlinuz " % rpart % "boot=" % lvtype % " xforcevesa nomodeset quiet splash" % prmtrs % "\n  initrd /" % lvtype % "/initrd.gz\n}\n\n" % grxorg % "menuentry \"" % tr("Boot Live in debug mode") % "\" {\n  set gfxpayload=keep\n  linux /" % lvtype % "/vmlinuz " % rpart % "boot=" % lvtype % prmtrs % "\n  initrd /" % lvtype % "/initrd.gz\n}\n") &&
             sb::crtfile(sb::sdir[2] % "/.sblivesystemcreate/boot/grub/theme.cfg", "title-color: \"white\"\ntitle-text: \"Systemback Live (" % ifname % ")\"\ntitle-font: \"Sans Regular 16\"\ndesktop-color: \"black\"\ndesktop-image: \"/boot/grub/splash.png\"\nmessage-color: \"white\"\nmessage-bg-color: \"black\"\nterminal-font: \"Sans Regular 12\"\n\n+ boot_menu {\n  top = 150\n  left = 15%\n  width = 75%\n  height = " % (xmntry ? "150" : "130") % "\n  item_font = \"Sans Regular 12\"\n  item_color = \"grey\"\n  selected_item_color = \"white\"\n  item_height = 20\n  item_padding = 15\n  item_spacing = 5\n}\n\n+ vbox {\n  top = 100%\n  left = 2%\n  + label {text = \"" % tr("Press 'E' key to edit") % "\" font = \"Sans 10\" color = \"white\" align = \"left\"}\n}\n") &&
             sb::crtfile(sb::sdir[2] % "/.sblivesystemcreate/boot/grub/loopback.cfg", "menuentry \"" % tr("Boot Live system") % "\" {\n  set gfxpayload=keep\n  linux /" % lvtype % "/vmlinuz " % rpart % "boot=" % lvtype % " iso-scan/filename=$iso_path quiet splash" % prmtrs % "\n  initrd /" % lvtype % "/initrd.gz\n}\n\nmenuentry \"" % tr("Boot system installer") % "\" {\n  set gfxpayload=keep\n  linux /" % lvtype % "/vmlinuz " % rpart % "boot=" % lvtype % " iso-scan/filename=$iso_path finstall quiet splash" % prmtrs % "\n  initrd /" % lvtype % "/initrd.gz\n}\n\nmenuentry \"" % tr("Boot Live in safe graphics mode") % "\" {\n  set gfxpayload=keep\n  linux /" % lvtype % "/vmlinuz " % rpart % "boot=" % lvtype % " iso-scan/filename=$iso_path xforcevesa nomodeset quiet splash" % prmtrs % "\n  initrd /" % lvtype % "/initrd.gz\n}\n\n" % grxorg % "menuentry \"" % tr("Boot Live in debug mode") % "\" {\n  set gfxpayload=keep\n  linux /" % lvtype % "/vmlinuz " % rpart % "boot=" % lvtype % " iso-scan/filename=$iso_path" % prmtrs % "\n  initrd /" % lvtype % "/initrd.gz\n}\n")))) return err();
 #endif
@@ -7515,7 +7539,7 @@ void systemback::on_partitiondelete_clicked()
         sb::delpart(ui->partitionsettings->item(ui->partitionsettings->currentRow(), 0)->text());
         break;
     default:
-        sb::mkptable(ui->partitionsettings->item(ui->partitionsettings->currentRow(), 0)->text(), grub.isEFI ? "gpt" : "msdos");
+        sb::mkptable(ui->partitionsettings->item(ui->partitionsettings->currentRow(), 0)->text());
     }
 
     on_partitionrefresh2_clicked(),

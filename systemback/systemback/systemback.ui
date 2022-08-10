@@ -5622,23 +5622,6 @@
         </property>
        </widget>
       </widget>
-      <widget class="QLabel" name="efiwarning">
-       <property name="geometry">
-        <rect>
-         <x>313</x>
-         <y>340</y>
-         <width>375</width>
-         <height>40</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Need to set the mount point as '/boot/efi'!</string>
-       </property>
-       <property name="wordWrap">
-        <bool>true</bool>
-       </property>
-      </widget>
-      <zorder>efiwarning</zorder>
       <zorder>partitionsettingspanel3</zorder>
       <zorder>partitionsettingspanel2</zorder>
       <zorder>grubinstallcopydisable</zorder>
