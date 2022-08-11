@@ -2621,7 +2621,7 @@ void systemback::livewrite()
     }
 
     if(! sb::mkptable(ldev) || intrrpt) return err(338);
-    sb::delay(300);
+    sb::delay(200);
     QStr lrdir;
 
     {
@@ -2630,13 +2630,13 @@ void systemback::livewrite()
         if(isize < 4294967295)
         {
             if(! sb::mkpart(ldev) || intrrpt) return err(338);
-            sb::delay(300),
+            sb::delay(200),
             lrdir = "sblive";
         }
         else
         {
             if(! (sb::mkpart(ldev, 1048576, 104857600) && sb::mkpart(ldev)) || intrrpt) return err(338);
-            sb::delay(300);
+            sb::delay(200);
             if(sb::exec("mkfs.ext2 -FL SBROOT " % ldev % ((ismmc || isnvme)? "p" : nullptr) % '2') || intrrpt) return err(338);
             lrdir = "sbroot";
         }
@@ -2648,7 +2648,7 @@ void systemback::livewrite()
             || intrrpt || ! (sb::crtdir("/.sblivesystemwrite") && sb::crtdir("/.sblivesystemwrite/sblive"))
             || intrrpt) return err();
 
-        sb::delay(300);
+        sb::delay(200);
         if(! sb::mount(ldev % ((ismmc || isnvme) ? "p" : nullptr) % '1', "/.sblivesystemwrite/sblive") || intrrpt) return err(337);
 
         if(lrdir == "sbroot")
