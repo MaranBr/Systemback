@@ -6014,10 +6014,13 @@ void systemback::on_changepartition_clicked()
             ok = false;
     }
 
-    if(ok && ! ui->copynext->isEnabled())
-        ui->copynext->setEnabled(true);
-    else if(ui->copynext->isEnabled())
-        ui->copynext->setDisabled(true);
+    if(ok) {
+        if(! ui->copynext->isEnabled()) ui->copynext->setEnabled(true);
+    }
+    else
+    {
+        if(ui->copynext->isEnabled()) ui->copynext->setDisabled(true);
+    }
 
     if(ui->mountpoint->currentIndex())
         ui->mountpoint->setCurrentIndex(0);
