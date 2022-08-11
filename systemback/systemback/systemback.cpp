@@ -6014,7 +6014,8 @@ void systemback::on_changepartition_clicked()
             ok = false;
     }
 
-    if(ok) {
+    if(ok)
+    {
         if(! ui->copynext->isEnabled()) ui->copynext->setEnabled(true);
     }
     else
