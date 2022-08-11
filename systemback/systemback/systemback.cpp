@@ -5920,7 +5920,6 @@ void systemback::on_changepartition_clicked()
 {
     busy();
     QStr ompt(ui->partitionsettings->item(ui->partitionsettings->currentRow(), 4)->text()), mpt(ui->partitionsettings->item(ui->partitionsettings->currentRow(), 3)->text());
-    static QSL partitionmounted;
 
     if(! ompt.isEmpty())
     {
