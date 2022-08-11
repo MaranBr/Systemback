@@ -374,7 +374,7 @@
     </message>
     <message>
         <location filename="../systemback/systemback.ui" line="1234"/>
-        <location filename="../systemback/systemback.cpp" line="6223"/>
+        <location filename="../systemback/systemback.cpp" line="6226"/>
         <source>Mount</source>
         <translation>挂载</translation>
     </message>
@@ -468,7 +468,7 @@
         <location filename="../systemback/systemback.cpp" line="5553"/>
         <location filename="../systemback/systemback.cpp" line="5567"/>
         <location filename="../systemback/systemback.cpp" line="5568"/>
-        <location filename="../systemback/systemback.cpp" line="6801"/>
+        <location filename="../systemback/systemback.cpp" line="6804"/>
         <source>Disabled</source>
         <translation>禁用</translation>
     </message>
@@ -678,7 +678,7 @@
         <location filename="../systemback/systemback.ui" line="3627"/>
         <location filename="../systemback/systemback.cpp" line="3933"/>
         <location filename="../systemback/systemback.cpp" line="4443"/>
-        <location filename="../systemback/systemback.cpp" line="6131"/>
+        <location filename="../systemback/systemback.cpp" line="6134"/>
         <source>System copy</source>
         <translation>系统复制</translation>
     </message>
@@ -1050,28 +1050,28 @@ These will be defined as restorable configuration files!</source>
     </message>
     <message>
         <location filename="../systemback/systemback.cpp" line="632"/>
-        <location filename="../systemback/systemback.cpp" line="6928"/>
+        <location filename="../systemback/systemback.cpp" line="6931"/>
         <source>Top left</source>
         <translation>左上</translation>
     </message>
     <message>
         <location filename="../systemback/systemback.cpp" line="632"/>
         <location filename="../systemback/systemback.cpp" line="633"/>
-        <location filename="../systemback/systemback.cpp" line="6929"/>
+        <location filename="../systemback/systemback.cpp" line="6932"/>
         <source>Top right</source>
         <translation>右上</translation>
     </message>
     <message>
         <location filename="../systemback/systemback.cpp" line="632"/>
         <location filename="../systemback/systemback.cpp" line="633"/>
-        <location filename="../systemback/systemback.cpp" line="6930"/>
+        <location filename="../systemback/systemback.cpp" line="6933"/>
         <source>Center</source>
         <translation>居中</translation>
     </message>
     <message>
         <location filename="../systemback/systemback.cpp" line="632"/>
         <location filename="../systemback/systemback.cpp" line="633"/>
-        <location filename="../systemback/systemback.cpp" line="6931"/>
+        <location filename="../systemback/systemback.cpp" line="6934"/>
         <source>Bottom left</source>
         <translation>左下</translation>
     </message>
@@ -1083,39 +1083,39 @@ These will be defined as restorable configuration files!</source>
     </message>
     <message>
         <location filename="../systemback/systemback.cpp" line="634"/>
-        <location filename="../systemback/systemback.cpp" line="6835"/>
-        <location filename="../systemback/systemback.cpp" line="6844"/>
+        <location filename="../systemback/systemback.cpp" line="6838"/>
+        <location filename="../systemback/systemback.cpp" line="6847"/>
         <source>day(s)</source>
         <translation>天</translation>
     </message>
     <message>
         <location filename="../systemback/systemback.cpp" line="635"/>
-        <location filename="../systemback/systemback.cpp" line="6864"/>
-        <location filename="../systemback/systemback.cpp" line="6873"/>
+        <location filename="../systemback/systemback.cpp" line="6867"/>
+        <location filename="../systemback/systemback.cpp" line="6876"/>
         <source>hour(s)</source>
         <translation>小时</translation>
     </message>
     <message>
         <location filename="../systemback/systemback.cpp" line="636"/>
-        <location filename="../systemback/systemback.cpp" line="6852"/>
-        <location filename="../systemback/systemback.cpp" line="6881"/>
-        <location filename="../systemback/systemback.cpp" line="6893"/>
-        <location filename="../systemback/systemback.cpp" line="6901"/>
+        <location filename="../systemback/systemback.cpp" line="6855"/>
+        <location filename="../systemback/systemback.cpp" line="6884"/>
+        <location filename="../systemback/systemback.cpp" line="6896"/>
+        <location filename="../systemback/systemback.cpp" line="6904"/>
         <source>minute(s)</source>
         <translation>分钟</translation>
     </message>
     <message>
         <location filename="../systemback/systemback.cpp" line="637"/>
-        <location filename="../systemback/systemback.cpp" line="6909"/>
-        <location filename="../systemback/systemback.cpp" line="6917"/>
+        <location filename="../systemback/systemback.cpp" line="6912"/>
+        <location filename="../systemback/systemback.cpp" line="6920"/>
         <source>seconds</source>
         <translation>秒</translation>
     </message>
     <message>
         <location filename="../systemback/systemback.cpp" line="742"/>
         <location filename="../systemback/systemback.cpp" line="3888"/>
-        <location filename="../systemback/systemback.cpp" line="7722"/>
-        <location filename="../systemback/systemback.cpp" line="7738"/>
+        <location filename="../systemback/systemback.cpp" line="7725"/>
+        <location filename="../systemback/systemback.cpp" line="7741"/>
         <source>Everyone</source>
         <translation>所有人</translation>
     </message>
@@ -1654,55 +1654,55 @@ These will be defined as restorable configuration files!</source>
         <translation>多个挂载点</translation>
     </message>
     <message>
-        <location filename="../systemback/systemback.cpp" line="6782"/>
+        <location filename="../systemback/systemback.cpp" line="6785"/>
         <source>Enabled</source>
         <translation>已启用</translation>
     </message>
     <message>
-        <location filename="../systemback/systemback.cpp" line="6968"/>
+        <location filename="../systemback/systemback.cpp" line="6971"/>
         <source>Systemback worker thread is interrupted by the user.</source>
         <translation>Systemback工作进程被用户中止。</translation>
     </message>
     <message>
-        <location filename="../systemback/systemback.cpp" line="7445"/>
+        <location filename="../systemback/systemback.cpp" line="7448"/>
         <source>Boot Live without xorg.conf file</source>
         <translation>不使用xorg.conf文件启动Live系统</translation>
     </message>
     <message>
-        <location filename="../systemback/systemback.cpp" line="7448"/>
-        <location filename="../systemback/systemback.cpp" line="7450"/>
-        <location filename="../systemback/systemback.cpp" line="7452"/>
+        <location filename="../systemback/systemback.cpp" line="7451"/>
+        <location filename="../systemback/systemback.cpp" line="7453"/>
+        <location filename="../systemback/systemback.cpp" line="7455"/>
         <source>Boot Live system</source>
         <translation>启动Live系统</translation>
     </message>
     <message>
-        <location filename="../systemback/systemback.cpp" line="7448"/>
-        <location filename="../systemback/systemback.cpp" line="7450"/>
-        <location filename="../systemback/systemback.cpp" line="7452"/>
+        <location filename="../systemback/systemback.cpp" line="7451"/>
+        <location filename="../systemback/systemback.cpp" line="7453"/>
+        <location filename="../systemback/systemback.cpp" line="7455"/>
         <source>Boot system installer</source>
         <translation>启动系统安装器</translation>
     </message>
     <message>
-        <location filename="../systemback/systemback.cpp" line="7448"/>
-        <location filename="../systemback/systemback.cpp" line="7450"/>
-        <location filename="../systemback/systemback.cpp" line="7452"/>
+        <location filename="../systemback/systemback.cpp" line="7451"/>
+        <location filename="../systemback/systemback.cpp" line="7453"/>
+        <location filename="../systemback/systemback.cpp" line="7455"/>
         <source>Boot Live in safe graphics mode</source>
         <translation>在安全图像模式下启动Live系统</translation>
     </message>
     <message>
-        <location filename="../systemback/systemback.cpp" line="7448"/>
-        <location filename="../systemback/systemback.cpp" line="7450"/>
-        <location filename="../systemback/systemback.cpp" line="7452"/>
+        <location filename="../systemback/systemback.cpp" line="7451"/>
+        <location filename="../systemback/systemback.cpp" line="7453"/>
+        <location filename="../systemback/systemback.cpp" line="7455"/>
         <source>Boot Live in debug mode</source>
         <translation>在调试模式下启动Live系统</translation>
     </message>
     <message>
-        <location filename="../systemback/systemback.cpp" line="7449"/>
+        <location filename="../systemback/systemback.cpp" line="7452"/>
         <source>Press &apos;E&apos; key to edit</source>
         <translation>按&apos;E&apos;键编辑</translation>
     </message>
     <message>
-        <location filename="../systemback/systemback.cpp" line="7452"/>
+        <location filename="../systemback/systemback.cpp" line="7455"/>
         <source>Press TAB key to edit</source>
         <translation>按TAB键编辑</translation>
     </message>

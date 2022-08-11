@@ -120,7 +120,7 @@
     </message>
     <message>
         <location filename="../systemback/systemback.ui" line="1234"/>
-        <location filename="../systemback/systemback.cpp" line="6223"/>
+        <location filename="../systemback/systemback.cpp" line="6226"/>
         <source>Mount</source>
         <translation>Csatolás</translation>
     </message>
@@ -209,7 +209,7 @@
         <location filename="../systemback/systemback.cpp" line="5553"/>
         <location filename="../systemback/systemback.cpp" line="5567"/>
         <location filename="../systemback/systemback.cpp" line="5568"/>
-        <location filename="../systemback/systemback.cpp" line="6801"/>
+        <location filename="../systemback/systemback.cpp" line="6804"/>
         <source>Disabled</source>
         <translation>Tiltva</translation>
     </message>
@@ -398,7 +398,7 @@ Ezek visszaállítható konfigurációs fájloknak lesznek definiálva!</transla
         <location filename="../systemback/systemback.ui" line="3627"/>
         <location filename="../systemback/systemback.cpp" line="3933"/>
         <location filename="../systemback/systemback.cpp" line="4443"/>
-        <location filename="../systemback/systemback.cpp" line="6131"/>
+        <location filename="../systemback/systemback.cpp" line="6134"/>
         <source>System copy</source>
         <translation>Rendszermásolás</translation>
     </message>
@@ -786,28 +786,28 @@ Ezek visszaállítható konfigurációs fájloknak lesznek definiálva!</transla
     </message>
     <message>
         <location filename="../systemback/systemback.cpp" line="632"/>
-        <location filename="../systemback/systemback.cpp" line="6928"/>
+        <location filename="../systemback/systemback.cpp" line="6931"/>
         <source>Top left</source>
         <translation>Balra fent</translation>
     </message>
     <message>
         <location filename="../systemback/systemback.cpp" line="632"/>
         <location filename="../systemback/systemback.cpp" line="633"/>
-        <location filename="../systemback/systemback.cpp" line="6929"/>
+        <location filename="../systemback/systemback.cpp" line="6932"/>
         <source>Top right</source>
         <translation>Jobbra fent</translation>
     </message>
     <message>
         <location filename="../systemback/systemback.cpp" line="632"/>
         <location filename="../systemback/systemback.cpp" line="633"/>
-        <location filename="../systemback/systemback.cpp" line="6930"/>
+        <location filename="../systemback/systemback.cpp" line="6933"/>
         <source>Center</source>
         <translation>Középen</translation>
     </message>
     <message>
         <location filename="../systemback/systemback.cpp" line="632"/>
         <location filename="../systemback/systemback.cpp" line="633"/>
-        <location filename="../systemback/systemback.cpp" line="6931"/>
+        <location filename="../systemback/systemback.cpp" line="6934"/>
         <source>Bottom left</source>
         <translation>Balra lent</translation>
     </message>
@@ -819,31 +819,31 @@ Ezek visszaállítható konfigurációs fájloknak lesznek definiálva!</transla
     </message>
     <message>
         <location filename="../systemback/systemback.cpp" line="634"/>
-        <location filename="../systemback/systemback.cpp" line="6835"/>
-        <location filename="../systemback/systemback.cpp" line="6844"/>
+        <location filename="../systemback/systemback.cpp" line="6838"/>
+        <location filename="../systemback/systemback.cpp" line="6847"/>
         <source>day(s)</source>
         <translation>nap</translation>
     </message>
     <message>
         <location filename="../systemback/systemback.cpp" line="635"/>
-        <location filename="../systemback/systemback.cpp" line="6864"/>
-        <location filename="../systemback/systemback.cpp" line="6873"/>
+        <location filename="../systemback/systemback.cpp" line="6867"/>
+        <location filename="../systemback/systemback.cpp" line="6876"/>
         <source>hour(s)</source>
         <translation>óra</translation>
     </message>
     <message>
         <location filename="../systemback/systemback.cpp" line="636"/>
-        <location filename="../systemback/systemback.cpp" line="6852"/>
-        <location filename="../systemback/systemback.cpp" line="6881"/>
-        <location filename="../systemback/systemback.cpp" line="6893"/>
-        <location filename="../systemback/systemback.cpp" line="6901"/>
+        <location filename="../systemback/systemback.cpp" line="6855"/>
+        <location filename="../systemback/systemback.cpp" line="6884"/>
+        <location filename="../systemback/systemback.cpp" line="6896"/>
+        <location filename="../systemback/systemback.cpp" line="6904"/>
         <source>minute(s)</source>
         <translation>perc</translation>
     </message>
     <message>
         <location filename="../systemback/systemback.cpp" line="637"/>
-        <location filename="../systemback/systemback.cpp" line="6909"/>
-        <location filename="../systemback/systemback.cpp" line="6917"/>
+        <location filename="../systemback/systemback.cpp" line="6912"/>
+        <location filename="../systemback/systemback.cpp" line="6920"/>
         <source>seconds</source>
         <translation>másodperc</translation>
     </message>
@@ -1265,9 +1265,9 @@ Ezek visszaállítható konfigurációs fájloknak lesznek definiálva!</transla
         <translation>Az Live rendszerképet nem sikerűlt csatolni.</translation>
     </message>
     <message>
-        <location filename="../systemback/systemback.cpp" line="7448"/>
-        <location filename="../systemback/systemback.cpp" line="7450"/>
-        <location filename="../systemback/systemback.cpp" line="7452"/>
+        <location filename="../systemback/systemback.cpp" line="7451"/>
+        <location filename="../systemback/systemback.cpp" line="7453"/>
+        <location filename="../systemback/systemback.cpp" line="7455"/>
         <source>Boot system installer</source>
         <translation>Rendszertelepito inditasa</translation>
     </message>
@@ -1359,8 +1359,8 @@ Ezek visszaállítható konfigurációs fájloknak lesznek definiálva!</transla
     <message>
         <location filename="../systemback/systemback.cpp" line="742"/>
         <location filename="../systemback/systemback.cpp" line="3888"/>
-        <location filename="../systemback/systemback.cpp" line="7722"/>
-        <location filename="../systemback/systemback.cpp" line="7738"/>
+        <location filename="../systemback/systemback.cpp" line="7725"/>
+        <location filename="../systemback/systemback.cpp" line="7741"/>
         <source>Everyone</source>
         <translation>Mindenki</translation>
     </message>
@@ -1379,12 +1379,12 @@ Ezek visszaállítható konfigurációs fájloknak lesznek definiálva!</transla
         <translation>Többszörös csatolási pont</translation>
     </message>
     <message>
-        <location filename="../systemback/systemback.cpp" line="6782"/>
+        <location filename="../systemback/systemback.cpp" line="6785"/>
         <source>Enabled</source>
         <translation>Engedélyezve</translation>
     </message>
     <message>
-        <location filename="../systemback/systemback.cpp" line="6968"/>
+        <location filename="../systemback/systemback.cpp" line="6971"/>
         <source>Systemback worker thread is interrupted by the user.</source>
         <translation>Systemback munkaszál a felhasználó által megszakítva.</translation>
     </message>
@@ -1395,38 +1395,38 @@ Ezek visszaállítható konfigurációs fájloknak lesznek definiálva!</transla
         <translation>folyamat</translation>
     </message>
     <message>
-        <location filename="../systemback/systemback.cpp" line="7445"/>
+        <location filename="../systemback/systemback.cpp" line="7448"/>
         <source>Boot Live without xorg.conf file</source>
         <translation>Live inditasa xorg.conf fajl nelkul</translation>
     </message>
     <message>
-        <location filename="../systemback/systemback.cpp" line="7448"/>
-        <location filename="../systemback/systemback.cpp" line="7450"/>
-        <location filename="../systemback/systemback.cpp" line="7452"/>
+        <location filename="../systemback/systemback.cpp" line="7451"/>
+        <location filename="../systemback/systemback.cpp" line="7453"/>
+        <location filename="../systemback/systemback.cpp" line="7455"/>
         <source>Boot Live system</source>
         <translation>Live rendszer inditasa</translation>
     </message>
     <message>
-        <location filename="../systemback/systemback.cpp" line="7448"/>
-        <location filename="../systemback/systemback.cpp" line="7450"/>
-        <location filename="../systemback/systemback.cpp" line="7452"/>
+        <location filename="../systemback/systemback.cpp" line="7451"/>
+        <location filename="../systemback/systemback.cpp" line="7453"/>
+        <location filename="../systemback/systemback.cpp" line="7455"/>
         <source>Boot Live in safe graphics mode</source>
         <translation>Live inditasa csokkentett grafikus modban</translation>
     </message>
     <message>
-        <location filename="../systemback/systemback.cpp" line="7448"/>
-        <location filename="../systemback/systemback.cpp" line="7450"/>
-        <location filename="../systemback/systemback.cpp" line="7452"/>
+        <location filename="../systemback/systemback.cpp" line="7451"/>
+        <location filename="../systemback/systemback.cpp" line="7453"/>
+        <location filename="../systemback/systemback.cpp" line="7455"/>
         <source>Boot Live in debug mode</source>
         <translation>Live inditasa debug modban</translation>
     </message>
     <message>
-        <location filename="../systemback/systemback.cpp" line="7449"/>
+        <location filename="../systemback/systemback.cpp" line="7452"/>
         <source>Press &apos;E&apos; key to edit</source>
         <translation>Szerkeszteshez nyomd le az &apos;E&apos; billentyut</translation>
     </message>
     <message>
-        <location filename="../systemback/systemback.cpp" line="7452"/>
+        <location filename="../systemback/systemback.cpp" line="7455"/>
         <source>Press TAB key to edit</source>
         <translation>Szerkeszteshez nyomd le a TAB billentyut</translation>
     </message>
