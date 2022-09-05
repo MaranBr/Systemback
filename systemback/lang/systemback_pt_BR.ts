@@ -270,7 +270,7 @@
     <message>
         <location filename="../systemback/systemback.ui" line="201"/>
         <source>New root password (optional, not recommended for Ubuntu):</source>
-        <translation>Nova senha de root (opcional, não recomenddado para Ubuntu):</translation>
+        <translation>Nova senha de root (opcional, não recomendado para Ubuntu):</translation>
     </message>
     <message>
         <location filename="../systemback/systemback.ui" line="214"/>
