@@ -36,7 +36,7 @@ By scanning the QR Code below.
 
 Works as expected on:
 
-- Linux Mint *19*, *20* and *21*
+- Linux Mint 19, 20 and 21
 
 It's possible that it works on other equivalent distributions based on Ubuntu as well.
 
