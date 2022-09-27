@@ -36,7 +36,7 @@ By scanning the QR Code below.
 
 Works as expected on:
 
-- Linux Mint 19/20/21
+- Linux Mint *19*, *20* and *21*
 
 It's possible that it works on other equivalent distributions based on Ubuntu as well.
 
@@ -44,13 +44,17 @@ It's possible that it works on other equivalent distributions based on Ubuntu as
 
 You can get the latest builds on the [release page](https://github.com/MaranBr/Systemback/releases).
 
-## Install Systemback
+## Install
+
+**Install Systemback**
 
 Run the dpkg command to install the packages:
 
 ```
 $ sudo dpkg -i *.deb
 ```
+
+**Dependency Issues**
 
 If there are dependency issues, install the missing dependencies with the following command:
 
