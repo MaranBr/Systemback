@@ -6,6 +6,12 @@ It's a simple system backup and restore application with extra features.
 
 Systemback makes it easy to create backups of the system, configuration files, and user files. In case of problems you can easily restore the previous state of the system.
 
+<p align="center">
+  <img src=".utils/images/systemback_front_1.png">
+  <img src=".utils/images/systemback_front_2.png">
+  <img src=".utils/images/systemback_about.png">
+</p>
+
 ## Donate
 
 Systemback is free so you can use it without any limitations.
@@ -20,9 +26,11 @@ or
 
 By scanning the QR Code below.
 
-![QR Code](.donate/image/MaranBr.png "Scan to Donate Here")
+![QR Code](.utils/images/systemback_donate.png "Scan to Donate Here")
 
 ## Features
+
+Systemback has several useful features, some of which are described below:
 
 - System backup
 - System copy
@@ -63,3 +71,7 @@ $ sudo apt-get install -f
 ```
 
 Then install the Systemback packages again.
+
+## Wiki
+
+If you need more info about the project, you can get more detailed information on the [wiki page](https://github.com/MaranBr/Systemback/wiki).
