@@ -44,7 +44,7 @@ It's possible that it works on other equivalent distributions based on Ubuntu as
 
 You can get the latest builds on the [release page](https://github.com/MaranBr/Systemback/releases).
 
-## Install
+## Installation
 
 **Install Systemback**
 
