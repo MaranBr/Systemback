@@ -2530,7 +2530,7 @@
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="text">
-        <string notr="true">https://github.com/MaranBr/systemback</string>
+        <string notr="true">https://github.com/MaranBr/Systemback</string>
        </property>
       </widget>
       <widget class="QLabel" name="label_31">

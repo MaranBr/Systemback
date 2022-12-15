@@ -5970,10 +5970,12 @@ void systemback::on_changepartition_clicked()
                     ui->grubinstallcopydisable->show();
             }
         }
-        else if(ui->mountpoint->currentText() != "bios_grub" && ui->partitionsettings->item(ui->partitionsettings->currentRow(), 5)->text() != ui->filesystem->currentText())
+        else if(ui->mountpoint->currentText() != "bios_grub" && ui->mountpoint->currentText() != "swap" && ui->partitionsettings->item(ui->partitionsettings->currentRow(), 5)->text() != ui->filesystem->currentText())
             ui->partitionsettings->item(ui->partitionsettings->currentRow(), 5)->setText(ui->filesystem->currentText());
         else if(ui->mountpoint->currentText() == "bios_grub" && (! ui->partitionsettings->item(ui->partitionsettings->currentRow(), 5)->text().isEmpty()))
             ui->partitionsettings->item(ui->partitionsettings->currentRow(), 5)->setText(nullptr);
+        else if(ui->mountpoint->currentText() == "swap" && ui->partitionsettings->item(ui->partitionsettings->currentRow(), 5)->text() != "swap")
+            ui->partitionsettings->item(ui->partitionsettings->currentRow(), 5)->setText("swap");
 
         if(ui->format->isChecked())
         {
