@@ -1,4 +1,7 @@
-systemback (1.8.701) devel; urgency=low
+systemback (1.8.702) devel; urgency=low
+  * 1.8.702
+  * Fix swap partition creation
+
   * 1.8.701
   * Add support to create the bios_grub partition
   * Change the default partitioning scheme from MBR to GPT
