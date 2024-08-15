@@ -5,7 +5,7 @@ TARGET = systemback-cli
 
 CONFIG -= app_bundle
 CONFIG += console \
-          c++11 \
+          c++13 \
           exceptions_off
 
 TEMPLATE = app
@@ -40,8 +40,8 @@ QMAKE_LFLAGS += -g \
                 -Wl,-z,relro
 
 ! equals(QMAKE_CXX, clang++) {
-    QMAKE_CXXFLAGS += -flto
-    QMAKE_LFLAGS += -flto
+    QMAKE_CXXFLAGS += -flto=auto
+    QMAKE_LFLAGS += -flto=auto
 }
 
 LIBS += -L../libsystemback \
