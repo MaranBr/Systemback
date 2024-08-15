@@ -5,7 +5,7 @@ Maintainer: MaranBr <maranbr@outlook.com>
 Build-Depends: debhelper (>= 12),
                libblkid-dev,
                libmount-dev,
-               libncursesw5-dev,
+               libncurses-dev,
                libparted-dev,
                qtbase5-dev,
                qttools5-dev-tools
