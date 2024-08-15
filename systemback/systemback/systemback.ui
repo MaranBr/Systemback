@@ -2579,7 +2579,7 @@
         <cursorShape>IBeamCursor</cursorShape>
        </property>
        <property name="text">
-        <string notr="true">© 2021-2022, MaranBr</string>
+        <string notr="true">© 2021-2024, MaranBr</string>
        </property>
       </widget>
       <widget class="QLabel" name="label_35">
