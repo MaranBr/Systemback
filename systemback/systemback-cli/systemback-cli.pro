@@ -5,7 +5,7 @@ TARGET = systemback-cli
 
 CONFIG -= app_bundle
 CONFIG += console \
-          c++13 \
+          c++11 \
           exceptions_off
 
 TEMPLATE = app

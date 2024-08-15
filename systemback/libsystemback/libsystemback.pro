@@ -2,7 +2,7 @@ QT -= gui
 
 TARGET = systemback
 
-CONFIG += c++13 \
+CONFIG += c++11 \
           exceptions_off
 
 TEMPLATE = lib
