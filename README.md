@@ -44,7 +44,7 @@ Systemback has several useful features, some of which are described below:
 
 Works as expected on:
 
-- Linux Mint 19, 20 and 21
+- Linux Mint 19, 20, 21 and 22.
 
 It's possible that it works on other equivalent distributions based on Ubuntu as well.
 
