@@ -1,8 +1,8 @@
 systemback (1.8.703) devel; urgency=low
   * 1.8.703
   * Add support for Linux Mint 22
-  * Update flags for gcc/g++ 13 compiler to fix some warnings
-  * Update libncurses5-dev to libncurses-dev to fix some warnings
+  * Update flags for gcc/g++ 13 compiler
+  * Update libncursesw5-dev to libncurses-dev
   * Update EFI boot files
 
   * 1.8.702
@@ -112,4 +112,4 @@ systemback (1.8.703) devel; urgency=low
   * Some minor fixes and improvements
   * Import new Hungarian translations
 
- -- MaranBr <maranbr@outlook.com>  Thu, 15 Aug 2024 10:14:36 -0400
+ -- MaranBr <maranbr@outlook.com>  Fri, 23 Aug 2024 14:21:36 -0400
